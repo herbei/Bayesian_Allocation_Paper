@@ -21,11 +21,14 @@ reproduce the Section 4 figures shipped in
   figure scripts.
 - `out/`: default output directory for generated figures.
 
-Run the scripts from `src/`; paths are resolved relative to the submitted code
-directory. By default, the scripts write generated figures to `out/`. Set
-`FK_OUTPUT_DIR` to write Figures 01--03 elsewhere, and set
-`OXY_FIGURE_CHAIN_FILE` or the figure-specific chain-file variables for
-Figures 04--06.
+## Dependencies
+
+The figure scripts require the R packages `ggplot2`, `gridExtra`, `maps`, and
+`scales`. PDF cropping requires the external `pdfcrop` command.
+
+## Run
+
+From this `Figures/` directory:
 
 ```sh
 Rscript src/Figure01.R
@@ -36,4 +39,15 @@ Rscript src/Figure05.R
 Rscript src/Figure06.R
 ```
 
-All fixed inputs are read from `../Data/inputs/`.
+The scripts resolve paths relative to the submitted code directory, so they can
+also be run through `../run_section4_figures.sh`. By default, Figures 01--03
+write to `out/`; Figures 04--06 write to `out/<chain-file-name>/` because they
+depend on an MCMC artifact.
+
+Set `FK_OUTPUT_DIR` to write Figures 01--03 elsewhere. Set
+`OXY_FIGURE_CHAIN_FILE` or the figure-specific chain-file variables
+`OXY_FIGURE04_CHAIN_FILE`, `OXY_FIGURE05_CHAIN_FILE`, and
+`OXY_FIGURE06_CHAIN_FILE` for Figures 04--06. Set `OXY_FIGURE_OUTPUT_DIR` to
+override the posterior-figure output directory.
+
+All fixed inputs are read from `../Data/inputs/` by default.
