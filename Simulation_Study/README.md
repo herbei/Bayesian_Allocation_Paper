@@ -6,20 +6,25 @@ This folder contains the code used for the oxygen simulation study in Section 4.
 
 - `run_mcmc.R`: selected-run MCMC entry point matching the reported compromise run
   (`K = 703`, `K0 = 300`, `p_k = 0.5`, `delta1 = delta2 = 2.5`).
+- `compare_mcmc_runs.R`: simple wrapper for comparing all saved MCMC artifacts in
+  one results folder. Edit `mcmc_runs_dir` near the top of the file to choose the
+  folder; by default it uses `Data/results`.
 - `modules/spectral2_ens.R`: spectral modal-allocation MCMC implementation.
+- `modules/mcmc_run_comparison.R`: reusable MCMC-run comparison helpers used by
+  `compare_mcmc_runs.R`.
 - `run_section4_figures.sh`: recreates the Section 4 figure panels from an MCMC artifact.
 - `Data/inputs/`: fixed inputs used by the MCMC, simulator, and figure scripts.
 - `Data/results/`: MCMC artifacts and downstream generated summaries.
 - `Figures/src/`: manuscript figure scripts and simulator helpers.
 - `Figures/out/`: generated figure outputs.
 
-Generated figure outputs are intentionally excluded.
+Generated figure and comparison outputs are intentionally excluded.
 
 ## Dependencies
 
 The MCMC entry point uses base R plus the fixed files in `Data/inputs/`.
 
-The figure scripts require these R packages:
+The figure and comparison scripts require these R packages:
 
 ```r
 install.packages(c("ggplot2", "gridExtra", "maps", "scales"))
@@ -58,3 +63,14 @@ The main environment-variable overrides are `N_ITER`, `BURN_IN`, `MCSTORE`,
 `PROGRESS_EVERY`, `SEED`, `K0`, `M_ENS`, `P_K`, `DELTA1`, `DELTA2`,
 `DELTA01`, `DELTA02`, `SIG2C_INIT`, `SIG2O_INIT`, `UPDATE_SIGMA2_AFTER`,
 and `OUTPUT_FILE`.
+
+To compare the saved MCMC artifacts in one results folder:
+
+```sh
+Rscript compare_mcmc_runs.R
+```
+
+By default this reads `.RData` artifacts from `Data/results`, uses
+`Data/inputs/trueXX.txt` as the true latent field, and writes comparison tables
+and figures to `<mcmc_runs_dir>/comparison`. To compare another folder, edit
+`mcmc_runs_dir` near the top of `compare_mcmc_runs.R`.
