@@ -2,9 +2,18 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+INVOCATION_DIR="$(pwd)"
 cd "$SCRIPT_DIR"
 
-CHAIN_FILE="${1:-Data/results/simulation_study_selected_run.RData}"
+if [[ $# -ge 1 && -n "$1" ]]; then
+  case "$1" in
+    /*) CHAIN_FILE="$1" ;;
+    *) CHAIN_FILE="$INVOCATION_DIR/$1" ;;
+  esac
+else
+  CHAIN_FILE="$SCRIPT_DIR/Data/results/simulation_study_selected_run.RData"
+fi
+
 if [[ ! -f "$CHAIN_FILE" ]]; then
   echo "Missing MCMC artifact: $CHAIN_FILE" >&2
   echo "Run Rscript run_mcmc.R first, or pass an existing .RData artifact." >&2
@@ -32,14 +41,14 @@ FK_OUTPUT_DIR="$FIGURE_ROOT/out" \
 
 OXY_FIGURE_CHAIN_FILE="$CHAIN_ABS" \
 OXY_FIGURE_OUTPUT_DIR="$OUTPUT_DIR" \
-  Rscript "$SCRIPT_DIR/Figures/src/Figure04.R"
+  Rscript "$SCRIPT_DIR/Figures/src/Figure04a.R"
+
+OXY_FIGURE_CHAIN_FILE="$CHAIN_ABS" \
+OXY_FIGURE_OUTPUT_DIR="$OUTPUT_DIR" \
+  Rscript "$SCRIPT_DIR/Figures/src/Figure04b.R"
 
 OXY_FIGURE_CHAIN_FILE="$CHAIN_ABS" \
 OXY_FIGURE_OUTPUT_DIR="$OUTPUT_DIR" \
   Rscript "$SCRIPT_DIR/Figures/src/Figure05.R"
-
-OXY_FIGURE_CHAIN_FILE="$CHAIN_ABS" \
-OXY_FIGURE_OUTPUT_DIR="$OUTPUT_DIR" \
-  Rscript "$SCRIPT_DIR/Figures/src/Figure06.R"
 
 echo "Wrote static figures to $FIGURE_ROOT/out and posterior figures to $OUTPUT_DIR"
