@@ -45,7 +45,7 @@ source(file.path(project_root, "Figures", "src", "plot_utils.R"))
 figure_root <- file.path(project_root, "Figures")
 chain_file <- resolve_figure_chain_file(
   figure_root,
-  "OXY_FIGURE06_CHAIN_FILE"
+  "OXY_FIGURE05_CHAIN_FILE"
 )
 fig_dir <- resolve_figure_output_dir(figure_root, chain_file)
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
@@ -201,7 +201,7 @@ legend_plot <- build_pip_heatmap(
 
 legend_grob <- suppressWarnings(extract_legend(legend_plot))
 if (is.null(legend_grob)) {
-  stop("Could not extract legend for Figure06.")
+  stop("Could not extract legend for Figure05.")
 }
 
 p_pip_full <- build_pip_heatmap(
@@ -233,8 +233,8 @@ figure_grob <- gridExtra::arrangeGrob(
 grDevices::dev.off()
 unlink(probe_pdf)
 
-output_pdf <- file.path(fig_dir, "Figure06.pdf")
-output_png <- file.path(fig_dir, "Figure06.png")
+output_pdf <- file.path(fig_dir, "Figure05.pdf")
+output_png <- file.path(fig_dir, "Figure05.png")
 
 figure_width_in <- 7.4
 figure_height_in <- 4.1

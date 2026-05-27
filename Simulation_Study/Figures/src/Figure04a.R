@@ -47,7 +47,7 @@ source(file.path(project_root, "Figures", "src", "plot_utils.R"))
 figure_root <- file.path(project_root, "Figures")
 chain_file <- resolve_figure_chain_file(
   figure_root,
-  "OXY_FIGURE04_CHAIN_FILE"
+  "OXY_FIGURE04A_CHAIN_FILE"
 )
 figure_dir <- resolve_figure_output_dir(figure_root, chain_file)
 dir.create(figure_dir, recursive = TRUE, showWarnings = FALSE)
@@ -234,8 +234,8 @@ figure_grob <- suppressWarnings(gridExtra::arrangeGrob(
 grDevices::dev.off()
 unlink(probe_pdf)
 
-output_pdf <- file.path(figure_dir, "Figure04.pdf")
-output_png <- file.path(figure_dir, "Figure04.png")
+output_pdf <- file.path(figure_dir, "Figure04a.pdf")
+output_png <- file.path(figure_dir, "Figure04a.png")
 
 pdf_device <- if (capabilities("cairo")) grDevices::cairo_pdf else grDevices::pdf
 suppressWarnings(ggplot2::ggsave(
